@@ -2,6 +2,7 @@ package com.example.statsapp;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -9,10 +10,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<Double> numbers = new ArrayList<Double>();
     private EditText text;
+    private TextView viewArr;
+    private Button buttonadd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         text = findViewById(R.id.editText1);
+        viewArr = findViewById(R.id.inputted);
+        buttonadd = findViewById(R.id.button);
 
 
         // Set the text block to empty once clicked
@@ -30,10 +36,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Set the text block to empty once clicked
+        buttonadd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                doAdd(v); //add to the array
+                display();//then display array
+            }
+        });
+
     }
+
+    public void display(){
+        viewArr.setText(numbers.toString());
+    }
+
     public void doAdd(View v){
         EditText e = (EditText)findViewById(R.id.editText1);
-        String value = e.getText().toString();
+        String value = text.getText().toString();
         if (value.isEmpty()) {
             Toast.makeText(this, "Please enter a value.", Toast.LENGTH_SHORT).show();
             return;
